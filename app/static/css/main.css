@@ -1,0 +1,320 @@
+/*------------------------------------------------- Default ----------------------------------------------------------------------*/
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.my-btn {
+    background-color: #9bcfe4;
+    color: white;
+    font-size: 14pt;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.my-btn:hover {
+    color: #f8f8f8;
+    background-color: #9fd4e9;
+}
+
+header {
+    background-color: #9bcfe4;
+}
+
+.content-title {
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, serif;
+    font-size: 24pt;
+}
+
+.my-dots {
+    display: flex;
+    list-style: none;
+    margin-top: 25px;
+    justify-content: center;
+    padding: 0;
+}
+
+.my-dots button {
+    background: rgba(0, 0, 0, 0);
+    border: 1px solid #9bcfe4;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white;
+    font-size: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    outline: none;
+    cursor: pointer;
+}
+
+.slick-active:focus {
+    outline: 0;
+}
+
+.my-dots .slick-active button {
+    background: #9bcfe4;
+}
+
+.w-85 {
+    width: 85%;
+!important;
+}
+
+.slick-track {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*------------------------------------------------- Header --------------------------------------------------------------------*/
+
+.logo-img {
+    background-image: url(/static/img/logo-original.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    background-color: #9bcfe4;
+}
+
+@media screen and (max-width: 576px) {
+    /*.logo-img {*/
+    /*height: 170px;*/
+    /*}*/
+    .logo-contacts {
+        font-size: 10pt;
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+    /*.logo-img {*/
+    /*height: 270px;*/
+    /*}*/
+    .logo-contacts {
+        font-size: 12pt;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    /*.logo-img {*/
+    /*height: 350px;*/
+    /*}*/
+    .logo-contacts {
+        font-size: 14pt;
+    }
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    /*.logo-img {*/
+    /*height: 700px;*/
+    /*}*/
+    .logo-contacts {
+        font-size: 16pt;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    /*.logo-img {*/
+    /*height: 750px;*/
+    /*}*/
+    .logo-contacts {
+        font-size: 18pt;
+    }
+}
+
+.logo-contacts {
+    background-color: #9bcfe4;
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, serif;
+    font-weight: bold;
+}
+
+.my-navbar {
+    background-color: #9bcfe4;
+}
+
+.my-nav-link {
+    color: rgba(255, 255, 255, 1) !important;
+    font-weight: bold;
+    font-family: "Helvetica Neue", serif;
+    font-size: 14pt;
+}
+
+/*------------------------------------------------- Main ----------------------------------------------------------------------*/
+
+/*------------------------------------- News ------------------------------------------*/
+.main-news {
+
+}
+
+.main-news-title {
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, serif;
+    font-size: 24pt;
+}
+
+.news {
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, serif;
+}
+
+.news-img {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.news-img img {
+    width: 100%;
+    vertical-align: center;
+}
+
+.news-title {
+    font-size: 16pt;
+}
+
+.news-description {
+    font-size: 12pt;
+}
+
+/*------------------------------------- Directions ------------------------------------------*/
+
+.main-directions {
+
+}
+
+.direct {
+    height: 16rem;
+    overflow: hidden;
+}
+
+
+.main-directions-title {
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, serif;
+    font-size: 24pt;
+}
+
+.direct-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.direct-img > img {
+    width: 100%;
+    min-height: 100%;
+    opacity: .3;
+}
+
+.direct-title {
+    display: block;
+    justify-content: center;
+    position: absolute;
+}
+
+.direct-title h2 {
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, serif;
+    font-size: 2em;
+    font-weight: bold;
+    /*box-shadow: 0 0 10px white;*/
+    /*border: 1px solid white;*/
+    /*padding: 0 5px;*/
+}
+
+
+/*------------------------------------- Free-lesson ------------------------------------------*/
+
+.main-free-lesson {
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, serif;
+}
+
+.main-free-lesson-title {
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, serif;
+    font-size: 24pt;
+}
+
+/*------------------------------------- Gallery ------------------------------------------*/
+
+.gallery-item {
+    height: 12rem;
+}
+
+.gallery-item-img {
+    width: 100%;
+    overflow: hidden;
+}
+
+.gallery-item-img img {
+    width: 100%;
+}
+
+.gallery-item-title {
+    display: block;
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, serif;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+/*------------------------------------------------- Footer ----------------------------------------------------------------------*/
+
+
+.footer {
+    color: rgba(255, 255, 255, 1) !important;
+    font-weight: bold;
+    padding: 2%;
+    font-family: "Helvetica Neue", serif;
+    font-size: 16pt;
+    background-color: #9bcfe4;
+}
+
+
+/*------------------------------------------------- Direct ----------------------------------------------------------------------*/
+
+.direct-description {
+    color: black;
+    font-family: "Helvetica Neue", serif;
+    font-size: 14pt;
+}
+
+
+/*------------------------------------- Teacher ------------------------------------------*/
+.teacher-name {
+    color: black;
+    font-family: "Helvetica Neue", serif;
+    font-size: 18pt;
+}
+
+.teacher-description {
+    color: black;
+    font-family: "Helvetica Neue", serif;
+    font-size: 14pt;
+}
+
+/*-------------------------------------- Single ---------------------------------------------*/
+.news-body {
+    margin-top: 2rem;
+}
+
+.news-body-header {
+    float: left;
+}
+
+.news-body {
+    color: black;
+    font-family: "Helvetica Neue", serif;
+    font-size: 14pt;
+}

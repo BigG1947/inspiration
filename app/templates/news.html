@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+
+
+<h2 class="content-title text-center">Новости</h2>
+<div class="news-block">
+    <div class="container">
+        <div class="news">
+            {% for news in news_list %}
+                <div class="row news my-3">
+                    <div class="col-12 col-lg-3 my-1 my-lg-0 news-img"><a href="/news/{{ news.id }}"><img
+                            src="{{ news.img }}"
+                            alt=""></a>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <a href="">
+                            <div class="news-title my-3 mt-lg-0 mb-lg-3">{{ news.title }}</div>
+                            <div class="news-description">
+                                {{ news.description }}
+                            </div>
+                        </a>
+                        <div class="row justify-content-end align-items-end mt-2">
+                            <span>{{ news.author }}</span>
+                            <span>{{ news.date }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row justify-content-center mt-3">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}
