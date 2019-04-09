@@ -1,14 +1,15 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-{{ news_list[3] }}
+    {{ news_list[3] }}
     <div class="main-news">
         <h2 class="h2 text-center main-news-title my-4">Новости</h2>
         <div class="container">
             {% for news in news_list %}
                 <div class="row news my-3">
-                    <div class="col-12 col-lg-3 my-1 my-lg-0 news-img"><a href="/news/{{ news.id }}"><img src="{{ news.img }}"
-                                                                                       alt=""></a>
+                    <div class="col-12 col-lg-3 my-1 my-lg-0 news-img"><a href="/news/{{ news.id }}"><img
+                            src="{{ news.img }}"
+                            alt=""></a>
                     </div>
                     <div class="col-12 col-lg-8">
                         <a href="">
@@ -32,63 +33,21 @@
     </div>
 
 
-    <div class="main-directions">
+    <div class="main-directions" id="main-directions">
         <h2 class="h2 text-center main-directions-title my-4">Наши направления</h2>
         <div class="container">
             <div class="row directions-flow justify-content-around">
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/news1.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/news2.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/news3.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/dance.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/dance.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/dance.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/dance.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/dance.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/dance.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/dance.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/dance.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                    <div class="direct-img"><img src="/static/img/dance.jpg" alt="" class="w-100"></div>
-                    <div class="direct-title"><h2>Танцы</h2></div>
-                </div>
+                {% for direct in range(12) %}
+                    <a href="/direction/{{ direct }}"  class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
+                        <div class="direct-img"><img src="/static/img/news1.jpg" alt="" class="w-100"></div>
+                        <div class="direct-title"><h2>Танцы</h2></div>
+                    </a>
+                {% endfor %}
             </div>
         </div>
     </div>
 
-    <div class="main-free-lesson">
+    <div class="main-free-lesson" id="main-free-lesson">
         <h2 class="h2 text-center main-free-lesson-title my-4">Бесплатное пробное занятие</h2>
         <div class="container">
             <form>
@@ -96,14 +55,14 @@
                     <label for="inputNumber" class="col-12 col-lg-3 col-form-label text-lg-right">Номер телефона
                         родителя: </label>
                     <div class="col-12 col-lg-5">
-                        <input type="text" class="form-control" id="inputNumber" value="">
+                        <input type="text" name="inputNumber" class="form-control" id="inputNumber" value="">
                     </div>
                 </div>
                 <div class="form-group row justify-content-center align-items-center my-3">
                     <label for="inputBabyName" class="col-12 col-lg-3 col-form-label text-lg-right">Имя
                         ребенка: </label>
                     <div class="col-12 col-lg-5">
-                        <input type="text" class="form-control" id="inputBabyName" placeholder="">
+                        <input type="text" class="form-control" name="inputBabyName" id="inputBabyName" placeholder="">
                     </div>
                 </div>
                 <div class="form-group row justify-content-center align-items-center my-3">
@@ -133,27 +92,27 @@
     </div>
 
     <div class="main-gallery">
-        <h2 class="h2 text-center main-gallery my-3">Галерея</h2>
+        <h2 class="h2 text-center main-gallery-title my-3">Галерея</h2>
         <div class="container">
             <div class="row justify-content-center gallery-flow">
-                <div class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
+                <a href="/album/1" class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
                     <div class="gallery-item-img"><img src="/static/img/news1.jpg" alt="" class="w-100"></div>
                     <div><h3 class="h3 text-center gallery-item-title">Альбом 1</h3></div>
 
-                </div>
-                <div class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
+                </a>
+                <a href="/album/2" class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
                     <div class="gallery-item-img"><img src="/static/img/news2.jpg" alt="" class="w-100"></div>
                     <div><h3 class="h3 text-center gallery-item-title">Альбом 2</h3></div>
 
-                </div>
-                <div class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
+                </a>
+                <a href="/album/3" class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
                     <div class="gallery-item-img"><img src="/static/img/news3.jpg" alt="" class="w-100"></div>
                     <div><h3 class="h3 text-center gallery-item-title">Альбом 3</h3></div>
 
-                </div>
+                </a>
             </div>
             <div class="row justify-content-center my-3">
-                <a href="" class="btn my-btn">Показать все</a>
+                <a href="/gallery" class="btn my-btn">Показать все</a>
             </div>
         </div>
     </div>

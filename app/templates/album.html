@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-white">
+                    <li class="breadcrumb-item"><a href="/gallery">Галерея</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Альбом 1</li>
+                </ol>
+            </nav>
+        </div>
+
+
+        <div class="row justify-content-center">
+            {% for i in range(50) %}
+                <div style="display: flex; align-items: center; overflow:hidden; width: 13rem; height: 10rem;"
+                     class="m-1">
+                    {% if i % 2 == 0 %}
+                        <a data-fancybox="gallery" href="/static/img/news3.jpg"><img class="" style="width: 13rem;"
+                                                                                     src="/static/img/news3.jpg"></a>
+                        </div>
+                    {% elif i % 3 == 0 %}
+                        <a data-fancybox="gallery" href="/static/img/news2.jpg"><img class="" style="width: 13rem;"
+                                                                                     src="/static/img/news2.jpg"></a>
+                        </div>
+                    {% else %}
+                        <a data-fancybox="gallery" href="/static/img/dance.jpg"><img class="" style="width: 13rem;"
+                                                                                     src="/static/img/dance.jpg"></a>
+                        </div>
+                    {% endif %}
+            {% endfor %}
+    </div>
+    </div>
+
+
+{% endblock %}

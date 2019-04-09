@@ -47,6 +47,27 @@ def index():
 def news():
     return render_template('news.html', news_list=news_list)
 
+
 @app.route("/news/<int:id>")
 def single(id):
-    return render_template('single.html', news=news1)
+    return render_template('single.html', news=news3)
+
+
+@app.route("/direction/<int:id>")
+def direction(id):
+    return render_template("direct.html")
+
+
+@app.route("/logoped")
+def logoped():
+    return render_template("logoped.html")
+
+
+@app.route("/gallery")
+def gallery():
+    return render_template("gallery.html")
+
+
+@app.route("/album/<int:id>")
+def album(id):
+    return render_template("album.html")

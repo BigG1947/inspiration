@@ -6,25 +6,30 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Вдохновение - главная</title>
+    <link rel="stylesheet" href="/static/slick/slick.css">
+    <link rel="stylesheet" href="/static/slick/slick-theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css"/>
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
 <header>
-{#    <div class="logo-img">#}
-{#        <img src="/static/img/logo-original.jpg" class="w-100" alt="">#}
-{#    </div>#}
-{#    <div class="container-fluid">#}
-{##}
-{#        <div class="logo-contacts row">#}
-{#            <p class="col-6 text-center">г. Одесса ул.Комитетская 24б</p>#}
-{#            <p class="col-6 text-center">+380662223344</p>#}
-{#        </div>#}
-{#    </div>#}
+    {#    <div class="logo-img">#}
+    {#        <img src="/static/img/logo-original.jpg" class="w-100" alt="">#}
+    {#    </div>#}
+    {#    <div class="container-fluid">#}
+    {##}
+    {#        <div class="logo-contacts row">#}
+    {#            <p class="col-6 text-center">г. Одесса ул.Комитетская 24б</p>#}
+    {#            <p class="col-6 text-center">+380662223344</p>#}
+    {#        </div>#}
+    {#    </div>#}
     <nav class="navbar navbar-expand-lg navbar-dark my-navbar">
         <div class="container">
-            <a class="navbar-brand col-12 col-lg-3" href="/"><img src="/static/img/logo-original.jpg" style="width: 100%;" alt=""></a>
-            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            <a class="navbar-brand col-12 col-lg-3" href="/"><img src="/static/img/logo-original.jpg"
+                                                                  style="width: 100%;" alt="home"></a>
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -38,19 +43,19 @@
                         <a class="nav-link my-nav-link" href="#">О нас</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="direct.html">Направления</a>
+                        <a class="nav-link my-nav-link" href="/#main-directions">Направления</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">Новости</a>
+                        <a class="nav-link my-nav-link" href="/news">Новости</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">Галерея</a>
+                        <a class="nav-link my-nav-link" href="/gallery">Галерея</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">Логопед</a>
+                        <a class="nav-link my-nav-link" href="/logoped">Логопед</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">Бесплатное занятие</a>
+                        <a class="nav-link my-nav-link" href="/#main-free-lesson">Бесплатное занятие</a>
                     </li>
                 </ul>
             </div>
@@ -72,5 +77,23 @@
 </body>
 <script src="/static/js/jquery-3.3.1.js"></script>
 <script src="/static/js/popper.js"></script>
+<script src="/static/slick/slick.min.js"></script>
 <script src="/static/js/bootstrap.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.mu').slick({
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            arrows: true,
+            dots: true,
+            pauseOnHover: true,
+            dotsClass: "my-dots",
+        });
+
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
+
 </html>

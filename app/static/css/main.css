@@ -9,6 +9,15 @@ a:hover {
     color: black;
 }
 
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+ul {
+    margin-bottom: 1rem !important;
+}
+
 .my-btn {
     background-color: #9bcfe4;
     color: white;
@@ -71,6 +80,38 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.content {
+    min-height: 75vh;
+}
+
+details summary::-webkit-details-marker {
+    background-color: white;
+    color: #9bcfe4;
+}
+
+details[open] summary ~ * {
+    animation: sweep .3s ease-in-out;
+}
+
+@keyframes sweep {
+    0% {
+        opacity: 0;
+        margin-top: -20px
+    }
+    20% {
+        opacity: .2;
+        margin-top: -16px
+    }
+    100% {
+        opacity: 1;
+        margin-top: 0
+    }
+}
+
+.bg-blue {
+    background-color: #9bcfe4;
 }
 
 /*------------------------------------------------- Header --------------------------------------------------------------------*/
@@ -247,6 +288,13 @@ header {
 
 /*------------------------------------- Gallery ------------------------------------------*/
 
+.main-gallery-title {
+    color: black;
+    font-family: "Helvetica Neue", Helvetica, serif;
+    font-size: 24pt;
+}
+
+
 .gallery-item {
     height: 12rem;
 }
@@ -265,11 +313,10 @@ header {
     color: black;
     font-family: "Helvetica Neue", Helvetica, serif;
     font-size: 1.2em;
-    font-weight: bold;
 }
 
 
-/*------------------------------------------------- Footer ----------------------------------------------------------------------*/
+/*----------------------------- Footer -------------------------------------------*/
 
 
 .footer {
@@ -281,8 +328,10 @@ header {
     background-color: #9bcfe4;
 }
 
+/*------------------------------ End Main -----------------------------------------------*/
 
-/*------------------------------------------------- Direct ----------------------------------------------------------------------*/
+
+/*------------------------------------------------- Direct -----------------------------------------------------*/
 
 .direct-description {
     color: black;
@@ -310,11 +359,43 @@ header {
 }
 
 .news-body-header {
-    float: left;
+    /*float: left;*/
 }
 
 .news-body {
     color: black;
     font-family: "Helvetica Neue", serif;
     font-size: 14pt;
+}
+
+/*----------------------------------------- Logoped ----------------------------------------------*/
+
+.list-group {
+    border: none;
+    outline: none;
+}
+
+.list-group-item {
+    border: none;
+    outline: none;
+}
+
+.list-group-item:focus {
+    border: none;
+    outline: none;
+}
+
+.logoped-services {
+    color: black;
+    font-family: "Helvetica Neue", serif;
+    font-size: 1rem;
+}
+
+
+/*----------------------------------- Gallery -------------------------------------------------*/
+
+@media screen and (max-width: 767px) {
+    .gallery-item {
+        height: 18rem;
+    }
 }

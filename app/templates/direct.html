@@ -1,71 +1,13 @@
-<!doctype html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Вдохновение - танцы</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="slick/slick.css">
-    <link rel="stylesheet" href="slick/slick-theme.css">
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-<header>
-    <div class="logo-img">
-        <img src="img/logo-original.jpg" class="w-100" alt="">
-    </div>
-    <div class="container-fluid">
+{% extends 'base/base.html' %}
 
-        <div class="logo-contacts row">
-            <p class="col-6 text-center">г. Одесса ул.Комитетская 24б</p>
-            <p class="col-6 text-center">+380662223344</p>
-        </div>
-    </div>
-    <nav class="navbar navbar-expand-lg navbar-dark my-navbar">
-        <div class="container">
-            <a class="navbar-brand my-nav-link" href="index.html">Главная</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-md-auto text-lg-right">
-                    <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">О нас</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">Направления</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">Новости</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">Галерея</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">Логопед</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link my-nav-link" href="#">Бесплатное занятие</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
-
-<div class="content my-3">
+{% block content %}
     <h2 class="content-title text-center">Танцы</h2>
 
     <div class="teacher-block">
         <div class="container">
             <div class="row direct-teacher my-3">
                 <div class="teacher-img col-12 col-lg-3">
-                    <img src="img/teacher.jpg" class="w-100" alt="">
+                    <img src="/static/img/teacher.jpg" class="w-100" alt="">
                 </div>
                 <div class="teacher-body col-12 col-lg-9">
                     <div class="teacher-name">Иванова Нина Ивановна</div>
@@ -74,7 +16,7 @@
             </div>
             <div class="row direct-teacher my-3">
                 <div class="teacher-img col-12 col-lg-3">
-                    <img src="img/teacher2.jpg" class="w-100" alt="">
+                    <img src="/static/img/teacher2.jpg" class="w-100" alt="">
                 </div>
                 <div class="teacher-body col-12 col-lg-9">
                     <div class="teacher-name">Петровна Кира Сергеевна</div>
@@ -130,57 +72,28 @@
     <div class="direct-carousel">
         <div class="container">
             <div class="mu">
-                <div class="d-flex justify-content-center align-items-center"><img src="img/dance.jpg"
+                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/dance.jpg"
                                                                                    class="w-85 align-self-center"
                                                                                    alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="img/teacher2.jpg" class="w-85"
+                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher2.jpg" class="w-85"
                                                                                    alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="img/teacher.jpg" class="w-85"
+                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher.jpg" class="w-85"
                                                                                    alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="img/dance.jpg"
+                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/dance.jpg"
                                                                                    class="w-85 align-self-center"
                                                                                    alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="img/teacher2.jpg" class="w-85"
+                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher2.jpg" class="w-85"
                                                                                    alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="img/teacher.jpg" class="w-85"
+                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher.jpg" class="w-85"
                                                                                    alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="img/dance.jpg" class="w-85"
+                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/dance.jpg" class="w-85"
                                                                                    alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="img/teacher2.jpg" class="w-85"
+                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher2.jpg" class="w-85"
                                                                                    alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="img/teacher.jpg" class="w-85"
+                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher.jpg" class="w-85"
                                                                                    alt=""></div>
             </div>
         </div>
     </div>
+{% endblock %}
 
-
-</div>
-
-
-<div class="footer text-center">
-    © НАТХНЕННЯ 2019
-</div>
-
-
-</body>
-<script src="js/jquery-3.3.1.js"></script>
-<script src="js/popper.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/bootstrap.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.mu').slick({
-            slidesToShow: 5,
-            slidesToScroll: 5,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            arrows: true,
-            dots: true,
-            pauseOnHover: true,
-            dotsClass: "my-dots",
-        });
-
-    });
-</script>
-</html>
