@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Добавить новость</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="/static/mdb/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/mdb/css/mdb.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center align-items-center"  style="min-height: 100vh;">
+            <form action="" enctype="multipart/form-data" method="post" class="col-6 justify-content-center">
+            {% if error %}
+                <div class="alert alert-warning" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+                <div class="md-form">
+                    <input type="text" required name="title" value="{{ title }}" id="title" class="form-control">
+                    <label for="title">Заголовок</label>
+                </div>
+                <div class="md-form">
+                    <textarea id="form10" required name="text" id="text" class="md-textarea form-control" rows="3">{{ text }}</textarea>
+                    <label for="text">Текст новости</label>
+                </div>
+
+                <div class="">
+                    <label for="id_teacher">Автор: </label>
+                    <select class="browser-default custom-select " id="id_teacher" required name="id_teacher">
+                      <option value="1">Иванова И.И.</option>
+                      <option value="2">Крутова А.В</option>
+                      <option value="3">Якушева Н.Ф.</option>
+                    </select>
+                </div>
+                  {% if img %}
+                    <img src="{{ img }}" class="img-fluid z-depth-1 my-3" alt="1">
+                    <div class="alert alert-warning" role="alert">
+                        Внимае! Выбор нового изображения заменит старое!
+                    </div>
+                  {% endif %}
+                <div class="input-group mt-5">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="img">Загрузить</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" name="img" class="custom-file-input" id="img"
+                        aria-describedby="img">
+                        <label class="custom-file-label" for="img">Выберите файл</label>
+                    </div>
+                </div>
+                <div class="mt-5 text-right">
+                    <a href="/admin" class="btn btn-outline-warning">Назад</a>
+
+                    <button class="btn btn-default">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script src="/static/mdb/js/jquery-3.4.1.min.js"></script>
+<script src="/static/mdb/js/popper.min.js"></script>
+<script src="/static/mdb/js/bootstrap.js"></script>
+<script src="/static/mdb/js/mdb.js"></script>
+
+
+</script>
+
+</html>

@@ -1,7 +1,9 @@
 import os
 
-from app import app
+from app import app, db
 from flask import render_template, request, session, redirect
+from app.functions import upload_images
+from app.models import News, Teacher, Direction
 
 news1 = {
     'id': 1,
@@ -108,5 +110,74 @@ def logout():
 @app.route("/admin")
 def admin():
     if 'admin' in session:
-        return "{}".format(session['admin'])
+        news = News.query.all()
+        return render_template("admin/index.html", news=news)
     return redirect("/login", 302)
+
+
+# NEWS CONTROLLERS
+
+@app.route("/admin/news/add", methods=["GET", "POST"])
+def news_add():
+    if 'admin' in session:
+        title = ""
+        text = ""
+        img = ""
+        id_teacher = 0
+        error = ""
+        if request.method == "POST":
+            title = request.form['title']
+            text = request.form['text']
+            id_teacher = request.form['id_teacher']
+            file = request.files.get('img', None)
+            if file is None:
+                error = "Необходимо выбрать файл!"
+                return render_template("admin/news_form.html", title=title, text=text, img=img, id_teacher=id_teacher,
+                                       error=error)
+            ok, img = upload_images(file)
+            if ok is not True:
+                error = "Ошибка при загрузке фотографии!"
+                return render_template("admin/news_form.html", title=title, text=text, img=img, id_teacher=id_teacher,
+                                       error=error)
+            news = News()
+            news.title = title
+            news.id_author = id_teacher
+            news.img = img
+            news.text = text
+            news.add()
+            return redirect("/admin", 302)
+        return render_template("admin/news_form.html", title=title, text=text, img=img, id_teacher=id_teacher, error=error)
+    return redirect("/login", 302)
+
+
+@app.route("/admin/news/<int:id>/edit", methods=["GET", "POST"])
+def news_edit(id):
+    if 'admin' in session:
+        error = ""
+        news = News.query.get(id)
+        if request.method == "POST":
+            news.title = request.form['title']
+            news.text = request.form['text']
+            news.id_author = request.form['id_teacher']
+            file = request.files.get('img', None)
+            if file is not None:
+                print("new images")
+                ok, news.img = upload_images(file, news.img)
+                print(news.img)
+                print(ok)
+                if ok is not True:
+                    error = "Ошибка при загрузке фотографии!"
+                    return render_template("admin/news_form.html", title=news.title, text=news.text, img=news.img, id_teacher=news.id_author,
+                                           error=error)
+            news.edit()
+            return redirect("/admin", 302)
+        return render_template("admin/news_form.html", title=news.title, text=news.text, img=news.img, id_teacher=news.id_author, error=error)
+    return redirect("/login", 302)
+
+
+@app.route("/admin/news/<int:id>/delete")
+def news_delete(id):
+    news = News.query.get(id) or None
+    if news is not None:
+        news.delete()
+    return redirect("/admin", 302)
