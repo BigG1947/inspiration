@@ -1,5 +1,7 @@
+import os
+
 from app import app
-from flask import render_template
+from flask import render_template, request, session, redirect
 
 news1 = {
     'id': 1,
@@ -71,3 +73,40 @@ def gallery():
 @app.route("/album/<int:id>")
 def album(id):
     return render_template("album.html")
+
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if 'admin' in session:
+        return redirect("/admin", 302)
+    login = ""
+    password = ""
+    error = ""
+    if request.method == "POST":
+        login = request.form["login"]
+        password = request.form["password"]
+        print(app.config)
+        if login == app.config["LOGIN"] and password == app.config["PASSWORD"]:
+            session['admin'] = login
+            return redirect("/admin", 302)
+        error = "Неверный логин или пароль"
+        return render_template("admin/login.html", login=login, password=password, error=error)
+    return render_template("admin/login.html", login=login, password=password, error=error)
+
+
+@app.route("/logout")
+def logout():
+    session.pop('admin', None)
+    return redirect("/", 302)
+
+
+@app.route("/admin")
+def admin():
+    if 'admin' in session:
+        return "{}".format(session['admin'])
+    return redirect("/login", 302)
