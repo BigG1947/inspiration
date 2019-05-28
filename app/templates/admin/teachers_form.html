@@ -21,27 +21,28 @@
                 </div>
             {% endif %}
             <div class="md-form">
-                <input type="text" required name="title" value="{{ title }}" id="title" class="form-control">
-                <label for="title">Заголовок</label>
+                <input type="text" required name="fio" value="{{ fio }}" id="fio" class="form-control">
+                <label for="fio">ПИБ</label>
             </div>
+
             <div class="md-form">
-                <textarea id="form10" required name="text" id="text" class="md-textarea form-control"
-                          rows="3">{{ text }}</textarea>
-                <label for="text">Текст новости</label>
+                <input type="text" required name="position" value="{{ position }}" id="position" class="form-control">
+                <label for="position">Должность</label>
             </div>
-
+            <div class="md-form my-5">
+                <input type="date" required name="birthday" value="{{ birthday }}" id="birthday" class="form-control">
+                <label for="birthday">День рождения</label>
+            </div>
             <div class="">
-                <label for="id_teacher">Автор: </label>
-                <select class="browser-default custom-select " id="id_teacher" required name="id_teacher">
-                    {% for t in teachers %}
-                        <option value="{{ t.id }} {% if t.id == id_teacher %}selected{% endif %}">{{ t.fio }}</option>
-
-                    {% endfor %}
-
+                <label for="id_direction">Направление: </label>
+                <select class="browser-default custom-select " id="id_direction" required name="id_direction">
+                    <option value="1">Танцы</option>
+                    <option value="2">Танцы</option>
+                    <option value="3">Танцы</option>
                 </select>
             </div>
-            {% if img %}
-                <img src="{{ img }}" class="img-fluid z-depth-1 my-3" alt="1">
+            {% if photo %}
+                <img src="{{ photo }}" class="img-fluid z-depth-1 my-3" alt="1">
                 <div class="alert alert-warning" role="alert">
                         Внимае! Выбор нового изображения заменит старое!
                     </div>
@@ -51,11 +52,12 @@
                     <span class="input-group-text" id="img">Загрузить</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" name="img" class="custom-file-input" id="img"
+                    <input type="file" name="photo" class="custom-file-input" id="img"
                            aria-describedby="img">
                     <label class="custom-file-label" for="img">Выберите файл</label>
                 </div>
             </div>
+
             <div class="mt-5 text-right">
                 <a href="/admin" class="btn btn-outline-warning">Назад</a>
 
@@ -70,9 +72,4 @@
 <script src="/static/mdb/js/popper.min.js"></script>
 <script src="/static/mdb/js/bootstrap.js"></script>
 <script src="/static/mdb/js/mdb.js"></script>
-
-
-</script>
-
-<
-/html>
+</html>

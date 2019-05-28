@@ -1,60 +1,31 @@
 import os
+from datetime import datetime
 
 from app import app, db
-from flask import render_template, request, session, redirect
-from app.functions import upload_images
+from flask import render_template, request, session, redirect, make_response
+from app.functions import upload_images, delete_un_use_image
 from app.models import News, Teacher, Direction
-
-news1 = {
-    'id': 1,
-    'title': 'Новость1',
-    'description': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolor enim esse '
-                   'laboriosam, nam numquam odio, officia perspiciatis quaerat, rerum soluta tenetur veritatis '
-                   'voluptatibus. Assumenda iure maxime minus optio placeat!',
-    'img': '/static/img/news3.jpg',
-    'text': '................',
-    'author': 'Новикова А.Н.',
-    'date': '12-01-2019'
-}
-news2 = {
-    'id': 2,
-    'title': 'Новость2',
-    'description': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolor enim esse '
-                   'laboriosam, nam numquam odio, officia perspiciatis quaerat, rerum soluta tenetur veritatis '
-                   'voluptatibus. Assumenda iure maxime minus optio placeat!',
-    'img': '/static/img/news1.jpg',
-    'text': '................',
-    'author': 'Новикова А.Н.',
-    'date': '12-01-2019'
-}
-news3 = {
-    'id': 3,
-    'title': 'Новость3',
-    'description': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolor enim esse '
-                   'laboriosam, nam numquam odio, officia perspiciatis quaerat, rerum soluta tenetur veritatis '
-                   'voluptatibus. Assumenda iure maxime minus optio placeat!',
-    'img': '/static/img/news2.jpg',
-    'text': '................',
-    'author': 'Новикова А.Н.',
-    'date': '12-01-2019'
-}
-news_list = [news1, news2, news3]
 
 
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html", news_list=news_list)
+    news = News.query.order_by(News.date.desc())
+    return render_template("index.html", news_list=news)
 
 
 @app.route('/news')
 def news():
-    return render_template('news.html', news_list=news_list)
+    news = News.query.order_by(News.date.desc())
+    return render_template('news.html', news_list=news)
 
 
 @app.route("/news/<int:id>")
 def single(id):
-    return render_template('single.html', news=news3)
+    news = News.query.get(id)
+    if news is None:
+        return redirect("/404", 302)
+    return render_template('single.html', news=news)
 
 
 @app.route("/direction/<int:id>")
@@ -110,13 +81,13 @@ def logout():
 @app.route("/admin")
 def admin():
     if 'admin' in session:
-        news = News.query.all()
-        return render_template("admin/index.html", news=news)
+        news = News.query.order_by(News.id.desc())
+        teachers = Teacher.query.order_by(Teacher.id.desc())
+        return render_template("admin/index.html", news=news, teachers=teachers)
     return redirect("/login", 302)
 
 
 # NEWS CONTROLLERS
-
 @app.route("/admin/news/add", methods=["GET", "POST"])
 def news_add():
     if 'admin' in session:
@@ -125,6 +96,7 @@ def news_add():
         img = ""
         id_teacher = 0
         error = ""
+        teachers = Teacher.query.order_by(Teacher.fio.asc())
         if request.method == "POST":
             title = request.form['title']
             text = request.form['text']
@@ -133,12 +105,12 @@ def news_add():
             if file is None:
                 error = "Необходимо выбрать файл!"
                 return render_template("admin/news_form.html", title=title, text=text, img=img, id_teacher=id_teacher,
-                                       error=error)
+                                       teachers=teachers, error=error)
             ok, img = upload_images(file)
             if ok is not True:
                 error = "Ошибка при загрузке фотографии!"
                 return render_template("admin/news_form.html", title=title, text=text, img=img, id_teacher=id_teacher,
-                                       error=error)
+                                       teachers=teachers, error=error)
             news = News()
             news.title = title
             news.id_author = id_teacher
@@ -146,7 +118,8 @@ def news_add():
             news.text = text
             news.add()
             return redirect("/admin", 302)
-        return render_template("admin/news_form.html", title=title, text=text, img=img, id_teacher=id_teacher, error=error)
+        return render_template("admin/news_form.html", title=title, text=text, img=img, id_teacher=id_teacher,
+                               teachers=teachers, error=error)
     return redirect("/login", 302)
 
 
@@ -155,29 +128,115 @@ def news_edit(id):
     if 'admin' in session:
         error = ""
         news = News.query.get(id)
+        teachers = Teacher.query.order_by(Teacher.fio.asc())
         if request.method == "POST":
             news.title = request.form['title']
             news.text = request.form['text']
             news.id_author = request.form['id_teacher']
             file = request.files.get('img', None)
             if file is not None:
-                print("new images")
                 ok, news.img = upload_images(file, news.img)
-                print(news.img)
-                print(ok)
                 if ok is not True:
                     error = "Ошибка при загрузке фотографии!"
-                    return render_template("admin/news_form.html", title=news.title, text=news.text, img=news.img, id_teacher=news.id_author,
-                                           error=error)
+                    return render_template("admin/news_form.html", title=news.title, text=news.text, img=news.img,
+                                           id_teacher=news.id_author,
+                                           teachers=teachers, error=error)
             news.edit()
             return redirect("/admin", 302)
-        return render_template("admin/news_form.html", title=news.title, text=news.text, img=news.img, id_teacher=news.id_author, error=error)
+        return render_template("admin/news_form.html", title=news.title, text=news.text, img=news.img,
+                               teachers=teachers, id_teacher=news.id_author, error=error)
     return redirect("/login", 302)
 
 
 @app.route("/admin/news/<int:id>/delete")
 def news_delete(id):
-    news = News.query.get(id) or None
-    if news is not None:
-        news.delete()
-    return redirect("/admin", 302)
+    if 'admin' in session:
+        news = News.query.get(id) or None
+        if news is not None:
+            delete_un_use_image(news.img)
+            news.delete()
+        return redirect("/admin", 302)
+    return redirect("/login", 302)
+
+
+# TEACHERS CONTROLLER
+@app.route("/admin/teachers/add", methods=["GET", "POST"])
+def teachers_add():
+    if 'admin' in session:
+        error = ""
+        fio = ""
+        photo = ""
+        position = ""
+        id_direction = ""
+        birthday = ""
+        if request.method == "POST":
+            fio = request.form["fio"]
+            position = request.form["position"]
+            id_direction = request.form["id_direction"]
+            birthday = request.form["birthday"]
+            file = request.files.get("photo", None)
+            if file is None:
+                error = "Необходимо выбрать фотографию!"
+                return render_template("admin/teachers_form.html", error=error, fio=fio, photo=photo, position=position,
+                                       id_direction=id_direction, birthday=birthday)
+            ok, photo = upload_images(file)
+            if ok is not True:
+                error = "Ошибка при загрузке фотографии!"
+                return render_template("admin/teachers_form.html", error=error, fio=fio, photo=photo, position=position,
+                                       id_direction=id_direction, birthday=birthday)
+            teacher = Teacher()
+            teacher.fio = fio
+            teacher.birthday = datetime.strptime(birthday, '%Y-%m-%d')
+            teacher.id_direction = id_direction
+            teacher.position = position
+            teacher.photo = photo
+            teacher.add()
+            return redirect("/admin", 302)
+        return render_template("admin/teachers_form.html", error=error, fio=fio, photo=photo, position=position,
+                               id_direction=id_direction, birthday=birthday)
+    return redirect("/login", 302)
+
+
+@app.route("/admin/teachers/<int:id>/edit", methods=["GET", "POST"])
+def teachers_edit(id):
+    if 'admin' in session:
+        error = ""
+        teacher = Teacher.query.get(id)
+        if request.method == "POST":
+            teacher.fio = request.form["fio"]
+            teacher.position = request.form["position"]
+            teacher.id_direction = request.form["id_direction"]
+            teacher.birthday = datetime.strptime(request.form["birthday"], '%Y-%m-%d')
+            file = request.files.get("photo", None)
+            if file is not None:
+                ok, teacher.photo = upload_images(file, teacher.photo)
+                if ok is not True:
+                    error = "Ошибка при загрузке фотографии!"
+                    return render_template("admin/teachers_form.html", error=error, fio=teacher.fio,
+                                           photo=teacher.photo, position=teacher.position,
+                                           id_direction=teacher.id_direction, birthday=teacher.birthday)
+            teacher.edit()
+            return redirect("/admin", 302)
+        return render_template("admin/teachers_form.html", error=error, fio=teacher.fio, photo=teacher.photo,
+                               position=teacher.position,
+                               id_direction=teacher.id_direction, birthday=teacher.birthday)
+    return redirect("/login", 302)
+
+
+@app.route("/admin/teachers/<int:id>/delete")
+def teachers_delete(id):
+    if 'admin' in session:
+        teacher = Teacher.query.get(id) or None
+        if teacher is not None:
+            delete_un_use_image(teacher.photo)
+            teacher.delete()
+        return redirect("/admin", 302)
+    return redirect("/login", 302)
+
+
+# DIRECTION CONTROLLER
+@app.route("/admin/direction/add", methods=["GET", "POST"])
+def direction_add():
+    if 'admin' in session:
+        return
+    return redirect("/login", 302)
