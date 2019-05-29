@@ -144,13 +144,9 @@
         <tr>
             <th class="th-sm">#
             </th>
-            <th class="th-sm">ФИО
+            <th class="th-sm">Наименование
             </th>
-            <th class="th-sm">Направление
-            </th>
-            <th class="th-sm">Должность
-            </th>
-            <th class="th-sm">Дата рождения
+            <th class="th-sm">Описание
             </th>
             <th class="th-sm">Редактировать
             </th>
@@ -159,16 +155,14 @@
         </tr>
         </thead>
         <tbody>
-        {% for t in teachers %}
+        {% for d in directions %}
             <tr>
-                <td>{{ t.id }}</td>
-                <td>{{ t.fio }}</td>
-                <td>{{ t.direction.name }}</td>
-                <td>{{ t.position }}</td>
-                <td>{{ t.birthday }}</td>
-                <td class="text-center"><a href="/admin/teachers/{{ t.id }}/edit" class="text-warning"><i
+                <td>{{ d.id }}</td>
+                <td>{{ d.name }}</td>
+                <td>{{ d.description }}</td>
+                <td class="text-center"><a href="/admin/direction/{{ d.id }}/edit" class="text-warning"><i
                         class="far fa-edit"></i></a></td>
-                <td class="text-center"><a href="/admin/teachers/{{ t.id }}/delete" class="text-danger"><i
+                <td class="text-center"><a href="/admin/direction/{{ d.id }}/delete" class="text-danger"><i
                         class="fa fa-trash" aria-hidden="true"></i></a></td>
             </tr>
         {% endfor %}
@@ -179,20 +173,14 @@
             <th class="th-sm"></th>
             <th class="th-sm"></th>
             <th class="th-sm"></th>
-            <th class="th-sm"></th>
-            <th class="th-sm"></th>
-            <th class="th-sm text-center"><a href="/admin/teachers/add" class="btn btn-success">Добавить</a></th>
+            <th class="th-sm text-center"><a href="/admin/direction/add" class="btn btn-success">Добавить</a></th>
         </tr>
         <tr>
             <th class="th-sm">#
             </th>
-            <th class="th-sm">ФИО
+            <th class="th-sm">Наименование
             </th>
-            <th class="th-sm">Направление
-            </th>
-            <th class="th-sm">Должность
-            </th>
-            <th class="th-sm">Дата рождения
+            <th class="th-sm">Описание
             </th>
             <th class="th-sm">Редактировать
             </th>

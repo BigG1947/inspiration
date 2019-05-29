@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Направление</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="/static/mdb/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/mdb/css/mdb.css">
+</head>
+<body>
+<div class="container animated fadeInDown">
+    {% for img in images %}
+        <form class="hide" action="/admin/direction/images/delete/" id="form_delete_{{ img }}" method="post"></form>
+    {% endfor %}
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <form action="" enctype="multipart/form-data" method="post" class="col-6 justify-content-center">
+            {% if error %}
+                <div class="alert alert-warning" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <div class="md-form">
+                <input type="text" required name="name" value="{{ name }}" id="name" class="form-control">
+                <label for="name">Наименование</label>
+            </div>
+
+            <div class="md-form">
+                <textarea id="description" required name="description" id="description" class="md-textarea form-control"
+                          rows="3">{{ description }}</textarea>
+                <label for="text">Описание</label>
+            </div>
+
+            {% if main_image %}
+                <img src="{{ main_image }}" class="img-fluid z-depth-1 my-3" alt="1">
+                <div class="alert alert-warning" role="alert">
+                        Внимае! Выбор нового изображения заменит старое!
+                    </div>
+            {% endif %}
+            <div class="input-group mt-5">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="main_image">Главное изображение</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" name="main_image" class="custom-file-input" id="main_image"
+                           aria-describedby="main_image">
+                    <label class="custom-file-label" for="main_image">Выберите файл</label>
+                </div>
+            </div>
+
+            {% if images %}
+                <div class="row justify-content-around my-5">
+                    {% for img in images %}
+                        <div class="col-3">
+                            <div class="text-center">
+                                <img src="{{ img }}" class="img-fluid z-depth-1" alt="1">
+                                <input type="hidden" value="{{ id }}" form="form_delete_{{ img }}" name="id">
+                                <input type="hidden" value="{{ img }}" form="form_delete_{{ img }}" name="path">
+                                <button type="submit" form="form_delete_{{ img }}" class="text-center mt-2 text-danger btn-outline-danger">
+                                    <i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="alert alert-warning" role="alert">
+        Внимае! Выбор новых изображений дополнит уже существующие!
+    </div>
+            {% endif %}
+
+            <div class="input-group mt-5">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="images">Дополнительные фото</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" name="images" multiple class="custom-file-input" id="images"
+                           aria-describedby="images">
+                    <label class="custom-file-label" for="images">Выберите файл</label>
+                </div>
+            </div>
+
+            <div class="mt-5 text-right">
+                <a href="/admin" class="btn btn-outline-warning">Назад</a>
+
+                <button class="btn btn-default">Добавить</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+<script src="/static/mdb/js/jquery-3.4.1.min.js"></script>
+<script src="/static/mdb/js/popper.min.js"></script>
+<script src="/static/mdb/js/bootstrap.js"></script>
+<script src="/static/mdb/js/mdb.js"></script>
+</html>

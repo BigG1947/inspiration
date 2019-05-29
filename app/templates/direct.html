@@ -5,65 +5,24 @@
 
     <div class="teacher-block">
         <div class="container">
-            <div class="row direct-teacher my-3">
-                <div class="teacher-img col-12 col-lg-3">
-                    <img src="/static/img/teacher.jpg" class="w-100" alt="">
+            {% for teacher in direction.teachers %}
+                <div class="row direct-teacher my-3">
+                    <div class="teacher-img col-12 col-lg-3">
+                        <img src="{{ teacher.photo }}" class="w-100" alt="">
+                    </div>
+                    <div class="teacher-body col-12 col-lg-9">
+                        <div class="teacher-name">{{ teacher.fio }}</div>
+                        <div class="teacher-description mt-3">{{ teacher.position }}</div>
+                    </div>
                 </div>
-                <div class="teacher-body col-12 col-lg-9">
-                    <div class="teacher-name">Иванова Нина Ивановна</div>
-                    <div class="teacher-description mt-3">Воспитать по направлению подготовка к школе.</div>
-                </div>
-            </div>
-            <div class="row direct-teacher my-3">
-                <div class="teacher-img col-12 col-lg-3">
-                    <img src="/static/img/teacher2.jpg" class="w-100" alt="">
-                </div>
-                <div class="teacher-body col-12 col-lg-9">
-                    <div class="teacher-name">Петровна Кира Сергеевна</div>
-                    <div class="teacher-description mt-3">Воспитать по направлению подготовка к школе.</div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
 
     <div class="direct-description">
         <div class="container">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod neque vitae sapien posuere, vel
-                rhoncus
-                arcu feugiat. Donec tempus hendrerit sagittis. Morbi venenatis in tortor ac elementum. Vivamus ut
-                sagittis
-                magna, quis facilisis erat. Suspendisse potenti. Aenean vestibulum at purus nec rutrum. Sed et tortor
-                eget
-                orci fermentum varius in et eros. Pellentesque at turpis viverra, gravida justo quis, eleifend purus.
-                Donec
-                tempus leo non metus hendrerit, a convallis felis vehicula. Praesent lobortis placerat dictum. Ut
-                lacinia
-                eget nunc vestibulum tristique. Curabitur malesuada, sapien vel suscipit eleifend, ex nisi porta ipsum,
-                et
-                sodales dui odio euismod velit.</p>
-            <p>Vivamus eu mi id dolor aliquam sodales a at tellus. Quisque euismod sodales commodo. Integer pharetra
-                massa
-                molestie libero pharetra, ut dignissim risus efficitur. In a risus maximus, fermentum risus eu, luctus
-                lorem. Mauris quam urna, volutpat commodo lobortis vel, luctus sed augue. Donec ullamcorper purus id
-                quam
-                imperdiet, dapibus accumsan lectus porttitor. Morbi dolor eros, posuere eu congue eu, faucibus eget
-                tellus.
-                Fusce egestas magna feugiat feugiat feugiat. Duis a pellentesque lorem. Nulla fringilla turpis quis
-                massa
-                elementum, nec tempor nulla gravida. Aliquam erat volutpat. Duis lacinia diam ut eros ultrices
-                sagittis.</p>
-            <p>Vivamus eu mi id dolor aliquam sodales a at tellus. Quisque euismod sodales commodo. Integer pharetra
-                massa
-                molestie libero pharetra, ut dignissim risus efficitur. In a risus maximus, fermentum risus eu, luctus
-                lorem. Mauris quam urna, volutpat commodo lobortis vel, luctus sed augue. Donec ullamcorper purus id
-                quam
-                imperdiet, dapibus accumsan lectus porttitor. Morbi dolor eros, posuere eu congue eu, faucibus eget
-                tellus.
-                Fusce egestas magna feugiat feugiat feugiat. Duis a pellentesque lorem. Nulla fringilla turpis quis
-                massa
-                elementum, nec tempor nulla gravida. Aliquam erat volutpat. Duis lacinia diam ut eros ultrices
-                sagittis.</p>
+            <p>{{ direction.description }}</p>
         </div>
 
     </div>
@@ -72,26 +31,11 @@
     <div class="direct-carousel">
         <div class="container">
             <div class="mu">
-                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/dance.jpg"
-                                                                                   class="w-85 align-self-center"
-                                                                                   alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher2.jpg" class="w-85"
-                                                                                   alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher.jpg" class="w-85"
-                                                                                   alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/dance.jpg"
-                                                                                   class="w-85 align-self-center"
-                                                                                   alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher2.jpg" class="w-85"
-                                                                                   alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher.jpg" class="w-85"
-                                                                                   alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/dance.jpg" class="w-85"
-                                                                                   alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher2.jpg" class="w-85"
-                                                                                   alt=""></div>
-                <div class="d-flex justify-content-center align-items-center"><img src="/static/img/teacher.jpg" class="w-85"
-                                                                                   alt=""></div>
+                {% for img in images_list %}
+                    <div class="d-flex justify-content-center align-items-center"><img src="{{ img }}"
+                                                                                       class="w-85 align-self-center"
+                                                                                       alt=""></div>
+                {% endfor %}
             </div>
         </div>
     </div>

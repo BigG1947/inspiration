@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import datetime
 
@@ -11,7 +12,8 @@ from app.models import News, Teacher, Direction
 @app.route("/index")
 def index():
     news = News.query.order_by(News.date.desc())
-    return render_template("index.html", news_list=news)
+    directions = Direction.query.order_by(Direction.id.desc())
+    return render_template("index.html", news_list=news, directions=directions)
 
 
 @app.route('/news')
@@ -30,7 +32,10 @@ def single(id):
 
 @app.route("/direction/<int:id>")
 def direction(id):
-    return render_template("direct.html")
+    direction = Direction.query.get(id) or None
+    if direction is None:
+        return redirect("/#main-directions", 302)
+    return render_template("direct.html", direction=direction, images_list=json.loads(direction.images))
 
 
 @app.route("/logoped")
@@ -63,7 +68,6 @@ def login():
     if request.method == "POST":
         login = request.form["login"]
         password = request.form["password"]
-        print(app.config)
         if login == app.config["LOGIN"] and password == app.config["PASSWORD"]:
             session['admin'] = login
             return redirect("/admin", 302)
@@ -83,7 +87,8 @@ def admin():
     if 'admin' in session:
         news = News.query.order_by(News.id.desc())
         teachers = Teacher.query.order_by(Teacher.id.desc())
-        return render_template("admin/index.html", news=news, teachers=teachers)
+        directions = Direction.query.order_by(Direction.id.desc())
+        return render_template("admin/index.html", news=news, teachers=teachers, directions=directions)
     return redirect("/login", 302)
 
 
@@ -238,5 +243,110 @@ def teachers_delete(id):
 @app.route("/admin/direction/add", methods=["GET", "POST"])
 def direction_add():
     if 'admin' in session:
-        return
+        name = ""
+        description = ""
+        main_image = ""
+        images = []
+        error = ""
+        if request.method == "POST":
+            name = request.form['name']
+            description = request.form['description']
+            file = request.files.get("main_image", None)
+            if file is None:
+                error = "Необходимо выбрать главное изображение!"
+                return render_template("admin/direction_form.html", error=error, name=name, description=description,
+                                       main_image=main_image, images=images)
+            ok, main_image = upload_images(file)
+            if ok is not True:
+                error = "Ошибка при загрузке фотографии!"
+                return render_template("admin/direction_form.html", error=error, name=name, description=description,
+                                       main_image=main_image, images=images)
+            images_form = request.files.getlist("images")
+            if images_form:
+                for image in images_form:
+                    ok, path = upload_images(image)
+                    if ok is not True:
+                        error = "Ошибка при загрузке фотографии!"
+                        return render_template("admin/direction_form.html", error=error, name=name,
+                                               description=description,
+                                               main_image=main_image, images=images)
+                    images.append(path)
+            direction = Direction()
+            direction.name = name
+            direction.description = description
+            direction.main_image = main_image
+            direction.images = json.dumps(images)
+            direction.add()
+            return redirect("/admin", 302)
+        return render_template("admin/direction_form.html", error=error, name=name, description=description,
+                               main_image=main_image, images=images)
+    return redirect("/login", 302)
+
+
+@app.route("/admin/direction/<int:id>/edit", methods=["GET", "POST"])
+def direction_edit(id):
+    if 'admin' in session:
+        error = ""
+        images = []
+        direction = Direction.query.get(id)
+        if request.method == "POST":
+            direction.name = request.form['name']
+            direction.description = request.form['description']
+            file = request.files.get("main_image")
+            if file is not None:
+                ok, direction.main_image = upload_images(file, direction.main_image)
+                if ok is not True:
+                    error = "Ошибка при загрузке фотографии2!"
+                    return render_template("admin/direction_form.html", error=error, id=direction.id,
+                                           name=direction.name, description=direction.description,
+                                           main_image=direction.main_image, images=json.loads(direction.images))
+            images_form = request.files.getlist("images")
+            if images_form:
+                for image in images_form:
+                    ok, path = upload_images(image)
+                    if ok is not True:
+                        error = "Ошибка при загрузке фотографии!"
+                        return render_template("admin/direction_form.html", error=error, id=direction.id,
+                                               name=direction.name,
+                                               description=direction.description,
+                                               main_image=direction.main_image, images=json.loads(direction.images))
+                    images.append(path)
+                direction.images = json.dumps(json.loads(direction.images) + images)
+            direction.edit()
+            return redirect("/admin", 302)
+        return render_template("admin/direction_form.html", error=error, id=direction.id, name=direction.name,
+                               description=direction.description,
+                               main_image=direction.main_image, images=json.loads(direction.images))
+    return redirect("/login", 302)
+
+
+@app.route("/admin/direction/<int:id>/delete")
+def direction_delete(id):
+    if 'admin' in session:
+        direction = Direction.query.get(id) or None
+        if direction is not None:
+            delete_un_use_image(direction.main_image)
+            images_list = json.loads(direction.images)
+            for image in images_list:
+                delete_un_use_image(image)
+            direction.delete()
+        return redirect("/admin", 302)
+    return redirect("/login", 302)
+
+
+@app.route("/admin/direction/images/delete/", methods=["POST"])
+def direction_images_delete():
+    if 'admin' in session:
+        id = request.form['id']
+        path = request.form['path']
+        direction = Direction.query.get(id)
+        if direction.images:
+            images_list = json.loads(direction.images)
+            for img in images_list:
+                if img == path:
+                    delete_un_use_image(path)
+            images_list.remove(path)
+            direction.images = json.dumps(images_list)
+            direction.edit()
+        return redirect("/admin/direction/{}/edit".format(id), 302)
     return redirect("/login", 302)

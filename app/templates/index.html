@@ -11,13 +11,13 @@
                             alt=""></a>
                     </div>
                     <div class="col-12 col-lg-8">
-                        <a href="">
+                        <a href="/news/{{ news.id }}">
                             <div class="news-title my-3 mt-lg-0 mb-lg-3">{{ news.title }}</div>
                             <div class="news-description">
-                                {{ news.description }}
+                                {{ news.text| truncate(50) }}
                             </div>
                         </a>
-                        <div class="row justify-content-between align-items-end mt-2">
+                        <div class="row justify-content-between align-items-end mt-3">
                             <span>{{ news.author.fio }}</span>
                             <span>{{ news.date }}</span>
                         </div>
@@ -36,13 +36,18 @@
         <h2 class="h2 text-center main-directions-title my-4">Наши направления</h2>
         <div class="container">
             <div class="row directions-flow justify-content-around">
-                {% for direct in range(12) %}
-                    <a href="/direction/{{ direct }}"
+                {% for direct in directions %}
+                    <a href="/direction/{{ direct.id }}"
                        class="col-12 col-md-6 col-lg-4 my-3 direct align-items-center justify-content-center d-flex">
-                        <div class="direct-img"><img src="/static/img/news1.jpg" alt="" class="w-100"></div>
-                        <div class="direct-title"><h2>Танцы</h2></div>
+                        <div class="direct-img"><img src="{{ direct.main_image }}" alt="" class="w-100"></div>
+                        <div class="direct-title"><h2>{{ direct.name }}</h2></div>
                     </a>
                 {% endfor %}
+                {% if not directions %}
+                    <div class="row alert alert-warning my-5">
+                        <h5 class="text-center h5-responsive ">В данный момент направления отсутствуют!</h5>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -68,19 +73,10 @@
                 <div class="form-group row justify-content-center align-items-center my-3">
                     <label for="inputDirect" class="col-12 col-lg-3 col-form-label text-lg-right">Направление: </label>
                     <div class="col-12 col-lg-5">
-                        <select id="inputDirect" name="inputDirect" class="form-control">
-                            <option value="1">Танцы</option>
-                            <option value="2">Танцы</option>
-                            <option value="3">Танцы</option>
-                            <option value="4">Танцы</option>
-                            <option value="5">Танцы</option>
-                            <option value="6">Танцы</option>
-                            <option value="7">Танцы</option>
-                            <option value="8">Танцы</option>
-                            <option value="9">Танцы</option>
-                            <option value="10">Танцы</option>
-                            <option value="11">Танцы</option>
-                            <option value="12">Танцы</option>
+                        <select id="inputDirect" {% if not directions %}disabled{% endif %} name="inputDirect" class="form-control">
+                            {% for direct in directions %}
+                                <option value="{{ direct.id }}">{{ direct.name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>

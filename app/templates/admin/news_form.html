@@ -34,7 +34,7 @@
                 <label for="id_teacher">Автор: </label>
                 <select class="browser-default custom-select " id="id_teacher" required name="id_teacher">
                     {% for t in teachers %}
-                        <option value="{{ t.id }} {% if t.id == id_teacher %}selected{% endif %}">{{ t.fio }}</option>
+                        <option value="{{ t.id }}" {% if t.id == id_teacher %}selected{% endif %}>{{ t.fio }}</option>
 
                     {% endfor %}
 

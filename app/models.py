@@ -31,6 +31,17 @@ class Direction(db.Model):
     images = db.Column(db.Text)
     teachers = db.relationship("Teacher", backref="direction", lazy="dynamic")
 
+    def add(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def edit(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
 
 class Teacher(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)
