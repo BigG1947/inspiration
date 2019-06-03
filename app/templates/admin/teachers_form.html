@@ -36,9 +36,10 @@
             <div class="">
                 <label for="id_direction">Направление: </label>
                 <select class="browser-default custom-select " id="id_direction" required name="id_direction">
-                    <option value="1">Танцы</option>
-                    <option value="2">Танцы</option>
-                    <option value="3">Танцы</option>
+                    {% for direction in directions %}
+                        <option value="{{ direction.id }}">{{ direction.name }}</option>
+                    {% endfor %}
+
                 </select>
             </div>
             {% if photo %}

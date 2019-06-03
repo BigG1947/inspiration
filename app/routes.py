@@ -1,19 +1,20 @@
 import json
-import os
 from datetime import datetime
 
 from app import app, db
-from flask import render_template, request, session, redirect, make_response
+from flask import render_template, request, session, redirect, make_response, flash
 from app.functions import upload_images, delete_un_use_image
-from app.models import News, Teacher, Direction
+from app.models import News, Teacher, Direction, Album, FreeLesson
 
 
 @app.route("/")
 @app.route("/index")
 def index():
-    news = News.query.order_by(News.date.desc())
-    directions = Direction.query.order_by(Direction.id.desc())
-    return render_template("index.html", news_list=news, directions=directions)
+    news = News.query.order_by(News.date.desc(), News.id.desc()).all()
+    directions = Direction.query.order_by(Direction.id.desc()).all()
+    albums = Album.query.order_by(Album.date.desc(), Album.id.desc()).all()
+    free_lesson = request.cookies.get('free_lesson')
+    return render_template("index.html", news_list=news, directions=directions, albums=albums, free_lesson=free_lesson)
 
 
 @app.route('/news')
@@ -45,12 +46,30 @@ def logoped():
 
 @app.route("/gallery")
 def gallery():
-    return render_template("gallery.html")
+    albums = Album.query.order_by(Album.date.desc(), Album.id.desc()).all()
+    return render_template("gallery.html", albums=albums)
 
 
 @app.route("/album/<int:id>")
 def album(id):
-    return render_template("album.html")
+    album = Album.query.get(id)
+    return render_template("album.html", album=album, images=json.loads(album.images))
+
+
+@app.route("/lesson/feedback", methods=["POST"])
+def lesson_feedback():
+    if 'admin' in session:
+        return redirect("/admin", 302)
+    free_lesson = FreeLesson()
+    free_lesson.parent_name = request.form["parent_name"]
+    free_lesson.parent_number = request.form["parent_number"]
+    free_lesson.child_name = request.form["child_name"]
+    free_lesson.id_direction = request.form["id_direction"]
+    free_lesson.add()
+    flash("Заявка на бесплатный урок успешно отправленна!")
+    response = make_response(redirect("/#main-free-lesson", 302))
+    response.set_cookie("free_lesson", 'true', max_age=60 * 60 * 24)
+    return response
 
 
 @app.route("/about")
@@ -85,10 +104,16 @@ def logout():
 @app.route("/admin")
 def admin():
     if 'admin' in session:
-        news = News.query.order_by(News.id.desc())
-        teachers = Teacher.query.order_by(Teacher.id.desc())
-        directions = Direction.query.order_by(Direction.id.desc())
-        return render_template("admin/index.html", news=news, teachers=teachers, directions=directions)
+        news = News.query.order_by(News.id.desc()).all()
+        teachers = Teacher.query.order_by(Teacher.id.desc()).all()
+        directions = Direction.query.order_by(Direction.id.desc()).all()
+        albums = Album.query.order_by(Album.id.desc()).all()
+        new_feedbacks = FreeLesson.query.filter_by(is_view=False).order_by(FreeLesson.date.desc(),
+                                                                           FreeLesson.id.desc()).all()
+        old_feedbacks = FreeLesson.query.filter_by(is_view=True).order_by(FreeLesson.date.desc(),
+                                                                          FreeLesson.id.desc()).all()
+        return render_template("admin/index.html", new_feedbacks=new_feedbacks, old_feedbacks=old_feedbacks, news=news,
+                               teachers=teachers, directions=directions, albums=albums)
     return redirect("/login", 302)
 
 
@@ -168,6 +193,7 @@ def news_delete(id):
 @app.route("/admin/teachers/add", methods=["GET", "POST"])
 def teachers_add():
     if 'admin' in session:
+        directions = Direction.query.order_by(Direction.id.desc()).all()
         error = ""
         fio = ""
         photo = ""
@@ -183,12 +209,12 @@ def teachers_add():
             if file is None:
                 error = "Необходимо выбрать фотографию!"
                 return render_template("admin/teachers_form.html", error=error, fio=fio, photo=photo, position=position,
-                                       id_direction=id_direction, birthday=birthday)
+                                       id_direction=id_direction, birthday=birthday, directions=directions)
             ok, photo = upload_images(file)
             if ok is not True:
                 error = "Ошибка при загрузке фотографии!"
                 return render_template("admin/teachers_form.html", error=error, fio=fio, photo=photo, position=position,
-                                       id_direction=id_direction, birthday=birthday)
+                                       id_direction=id_direction, birthday=birthday, directions=directions)
             teacher = Teacher()
             teacher.fio = fio
             teacher.birthday = datetime.strptime(birthday, '%Y-%m-%d')
@@ -198,7 +224,7 @@ def teachers_add():
             teacher.add()
             return redirect("/admin", 302)
         return render_template("admin/teachers_form.html", error=error, fio=fio, photo=photo, position=position,
-                               id_direction=id_direction, birthday=birthday)
+                               id_direction=id_direction, birthday=birthday, directions=directions)
     return redirect("/login", 302)
 
 
@@ -207,6 +233,7 @@ def teachers_edit(id):
     if 'admin' in session:
         error = ""
         teacher = Teacher.query.get(id)
+        directions = Direction.query.all()
         if request.method == "POST":
             teacher.fio = request.form["fio"]
             teacher.position = request.form["position"]
@@ -219,12 +246,13 @@ def teachers_edit(id):
                     error = "Ошибка при загрузке фотографии!"
                     return render_template("admin/teachers_form.html", error=error, fio=teacher.fio,
                                            photo=teacher.photo, position=teacher.position,
-                                           id_direction=teacher.id_direction, birthday=teacher.birthday)
+                                           id_direction=teacher.id_direction, birthday=teacher.birthday,
+                                           directions=directions)
             teacher.edit()
             return redirect("/admin", 302)
         return render_template("admin/teachers_form.html", error=error, fio=teacher.fio, photo=teacher.photo,
                                position=teacher.position,
-                               id_direction=teacher.id_direction, birthday=teacher.birthday)
+                               id_direction=teacher.id_direction, birthday=teacher.birthday, directions=directions)
     return redirect("/login", 302)
 
 
@@ -349,4 +377,120 @@ def direction_images_delete():
             direction.images = json.dumps(images_list)
             direction.edit()
         return redirect("/admin/direction/{}/edit".format(id), 302)
+    return redirect("/login", 302)
+
+
+# ALBUM CONTROLLER
+@app.route("/admin/album/add", methods=["GET", "POST"])
+def album_add():
+    if 'admin' in session:
+        name = ""
+        main_image = ""
+        images = []
+        error = ""
+        if request.method == "POST":
+            name = request.form['name']
+            file = request.files.get("main_image", None)
+            if file is None:
+                error = "Необходимо выбрать главное изображение!"
+                return render_template("admin/album_form.html", error=error, name=name, main_image=main_image,
+                                       images=images)
+            ok, main_image = upload_images(file)
+            if ok is not True:
+                error = "Ошибка при загрузке фотографии!"
+                return render_template("admin/album_form.html", error=error, name=name, main_image=main_image,
+                                       images=images)
+            images_form = request.files.getlist("images")
+            if images_form:
+                for image in images_form:
+                    ok, path = upload_images(image)
+                    if ok is not True:
+                        error = "Ошибка при загрузке фотографии!"
+                        return render_template("admin/album_form.html", error=error, name=name,
+                                               main_image=main_image, images=images)
+                    images.append(path)
+            album = Album()
+            album.name = name
+            album.main_image = main_image
+            album.images = json.dumps(images)
+            album.add()
+            return redirect("/admin", 302)
+        return render_template("admin/album_form.html")
+    return redirect("/login", 302)
+
+
+@app.route("/admin/album/<int:id>/edit", methods=["GET", "POST"])
+def album_edit(id):
+    if 'admin' in session:
+        error = ""
+        images = []
+        album = Album.query.get(id)
+        if request.method == "POST":
+            album.name = request.form['name']
+            file = request.files.get("main_image")
+            if file is not None:
+                ok, album.main_image = upload_images(file, album.main_image)
+                if ok is not True:
+                    error = "Ошибка при загрузке фотографии2!"
+                    return render_template("admin/album_form.html", error=error, id=album.id,
+                                           name=album.name,
+                                           main_image=album.main_image, images=json.loads(album.images))
+            images_form = request.files.getlist("images")
+            if images_form:
+                for image in images_form:
+                    ok, path = upload_images(image)
+                    if ok is not True:
+                        error = "Ошибка при загрузке фотографии!"
+                        return render_template("admin/album_form.html", error=error, id=album.id,
+                                               name=album.name,
+                                               main_image=album.main_image, images=json.loads(album.images))
+                    images.append(path)
+                album.images = json.dumps(json.loads(album.images) + images)
+            album.edit()
+            return redirect("/admin", 302)
+        return render_template("admin/album_form.html", error=error, id=album.id,
+                               name=album.name,
+                               main_image=album.main_image, images=json.loads(album.images))
+    return redirect("/login", 302)
+
+
+@app.route("/admin/album/<int:id>/delete", methods=["GET", "POST"])
+def album_delete(id):
+    if 'admin' in session:
+        album = Album.query.get(id) or None
+        if album is not None:
+            delete_un_use_image(album.main_image)
+            images_list = json.loads(album.images)
+            for image in images_list:
+                delete_un_use_image(image)
+            album.delete()
+        return redirect("/admin", 302)
+    return redirect("/login", 302)
+
+
+@app.route("/admin/album/images/delete/", methods=["POST"])
+def album_images_delete():
+    if 'admin' in session:
+        id = request.form['id']
+        path = request.form['path']
+        album = Album.query.get(id)
+        if album.images:
+            images_list = json.loads(album.images)
+            for img in images_list:
+                if img == path:
+                    delete_un_use_image(path)
+            images_list.remove(path)
+            album.images = json.dumps(images_list)
+            album.edit()
+        return redirect("/admin/album/{}/edit".format(id), 302)
+    return redirect("/login", 302)
+
+
+@app.route("/admin/free_lesson/<int:id>/view")
+def free_lesson_view(id):
+    if 'admin' in session:
+        free_lesson = FreeLesson.query.get(id)
+        free_lesson.is_view = True
+        free_lesson.edit()
+        return redirect("/admin", 302)
     return redirect("/login", 302)

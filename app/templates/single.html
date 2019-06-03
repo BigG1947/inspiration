@@ -4,12 +4,12 @@
     <div class="container">
         <div class="news-body row">
             <div class="news-body-header col-4">
-                <img src="{{ news.img }}" class="w-100" alt="">
+                <a data-fancybox="gallery" href="{{ news.img }}"><img src="{{ news.img }}" class="w-100" alt=""></a>
                 <div class="row news-body-title justify-content-center text-center"><h3>{{ news.title }}</h3></div>
 
             </div>
             <div class="news-body-content col-8 text-justify">
-                <div class="news-body-text">{{ news.text }}</div>
+                <div class="news-body-text">{{ news.text | safe }}</div>
                 <div class="row my-5 justify-content-between">
                     <p>Автор: <strong>{{ news.author.fio }}</strong></p>
                     <p><strong>{{ news.date }}</strong></p>

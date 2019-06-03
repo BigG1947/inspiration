@@ -6,23 +6,13 @@
         <h2 class="h2 text-center content-title my-3">Галерея</h2>
         <div class="container">
             <div class="row justify-content-center gallery-flow">
-                <a href="/album/1"
-                   class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
-                    <div class="gallery-item-img"><img src="/static/img/news1.jpg" alt="" class="w-100"></div>
-                    <div><h3 class="h3 text-center gallery-item-title">Альбом 1</h3></div>
-
-                </a>
-                <a href="/album/2"
-                   class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
-                    <div class="gallery-item-img"><img src="/static/img/news2.jpg" alt="" class="w-100"></div>
-                    <div><h3 class="h3 text-center gallery-item-title">Альбом 2</h3></div>
-
-                </a>
-                <a href="/album/3"
-                   class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
-                    <div class="gallery-item-img"><img src="/static/img/news3.jpg" alt="" class="w-100"></div>
-                    <div><h3 class="h3 text-center gallery-item-title">Альбом 3</h3></div>
-                </a>
+                {% for album in albums %}
+                    <a href="/album/1"
+                       class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
+                        <div class="gallery-item-img"><img src="{{ album.main_image }}" alt="" class="w-100"></div>
+                        <div><h3 class="h3 text-center gallery-item-title">{{ album.name }}</h3></div>
+                    </a>
+                {% endfor %}
             </div>
             <div class="row justify-content-center mt-3">
                 <nav aria-label="Page navigation example">

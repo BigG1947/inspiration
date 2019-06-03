@@ -7,31 +7,22 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb bg-white">
                     <li class="breadcrumb-item"><a href="/gallery">Галерея</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Альбом 1</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ album.name }}</li>
                 </ol>
             </nav>
         </div>
 
 
         <div class="row justify-content-center">
-            {% for i in range(50) %}
+            {% for img in images %}
                 <div style="display: flex; align-items: center; overflow:hidden; width: 13rem; height: 10rem;"
                      class="m-1">
-                    {% if i % 2 == 0 %}
-                        <a data-fancybox="gallery" href="/static/img/news3.jpg"><img class="" style="width: 13rem;"
-                                                                                     src="/static/img/news3.jpg"></a>
-                        </div>
-                    {% elif i % 3 == 0 %}
-                        <a data-fancybox="gallery" href="/static/img/news2.jpg"><img class="" style="width: 13rem;"
-                                                                                     src="/static/img/news2.jpg"></a>
-                        </div>
-                    {% else %}
-                        <a data-fancybox="gallery" href="/static/img/dance.jpg"><img class="" style="width: 13rem;"
-                                                                                     src="/static/img/dance.jpg"></a>
-                        </div>
-                    {% endif %}
+                    <a data-fancybox="gallery" href="{{ img }}"><img class="" style="width: 13rem;"
+                                                                     src="{{ img }}"></a>
+                </div>
+
             {% endfor %}
-    </div>
+        </div>
     </div>
 
 

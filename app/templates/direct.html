@@ -1,14 +1,14 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-    <h2 class="content-title text-center">Танцы</h2>
+    <h2 class="content-title text-center">{{ direction.name }}</h2>
 
     <div class="teacher-block">
         <div class="container">
             {% for teacher in direction.teachers %}
                 <div class="row direct-teacher my-3">
                     <div class="teacher-img col-12 col-lg-3">
-                        <img src="{{ teacher.photo }}" class="w-100" alt="">
+                        <a data-fancybox="gallery" href="{{ teacher.photo }}"><img src="{{ teacher.photo }}" class="w-100" alt=""></a>
                     </div>
                     <div class="teacher-body col-12 col-lg-9">
                         <div class="teacher-name">{{ teacher.fio }}</div>
@@ -22,7 +22,7 @@
 
     <div class="direct-description">
         <div class="container">
-            <p>{{ direction.description }}</p>
+            <p>{{ direction.description | safe }}</p>
         </div>
 
     </div>
@@ -32,9 +32,9 @@
         <div class="container">
             <div class="mu">
                 {% for img in images_list %}
-                    <div class="d-flex justify-content-center align-items-center"><img src="{{ img }}"
+                    <div class="d-flex justify-content-center align-items-center"><a data-fancybox="gallery" href="{{ img }}"><img src="{{ img }}"
                                                                                        class="w-85 align-self-center"
-                                                                                       alt=""></div>
+                                                                                       alt=""></a></div>
                 {% endfor %}
             </div>
         </div>
