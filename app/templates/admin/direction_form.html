@@ -31,7 +31,6 @@
             <div class="md-form">
                 <textarea id="description" required name="description" id="description" class="md-textarea form-control"
                           rows="3">{{ description }}</textarea>
-                <label for="text">Описание</label>
             </div>
 
             {% if main_image %}
@@ -96,4 +95,30 @@
 <script src="/static/mdb/js/popper.min.js"></script>
 <script src="/static/mdb/js/bootstrap.js"></script>
 <script src="/static/mdb/js/mdb.js"></script>
+<script src="https://cdn.ckeditor.com/4.11.4/full/ckeditor.js"></script>
+
+
+<script>
+    var ckeditor = CKEDITOR.replace( 'description', {
+        toolbarGroups : [
+		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+		{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+		{ name: 'forms', groups: [ 'forms' ] },
+		'/',
+		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+		{ name: 'links', groups: [ 'links' ] },
+		{ name: 'insert', groups: [ 'insert' ] },
+		'/',
+		{ name: 'styles', groups: [ 'styles' ] },
+		{ name: 'colors', groups: [ 'colors' ] },
+		{ name: 'tools', groups: [ 'tools' ] },
+		{ name: 'others', groups: [ 'others' ] },
+		{ name: 'about', groups: [ 'about' ] }
+    ],
+    removeButtons : 'Save,NewPage,Print,Source,Templates,PasteText,PasteFromWord,Scayt,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,Anchor,Image,Flash,Table,Smiley,SpecialChar,PageBreak,Iframe,BGColor,TextColor,ShowBlocks,About',
+    language: 'ru'
+    });
+</script>
 </html>

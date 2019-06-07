@@ -5,3 +5,4 @@ venv/*
 *.db
 migrations/*
 
+app/static/upload_images/*

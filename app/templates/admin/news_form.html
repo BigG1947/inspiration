@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="/static/mdb/css/bootstrap.css">
     <link rel="stylesheet" href="/static/mdb/css/mdb.css">
+
 </head>
 <body>
 <div class="container animated fadeInDown">
@@ -25,9 +26,8 @@
                 <label for="title">Заголовок</label>
             </div>
             <div class="md-form">
-                <textarea id="text" required name="text" id="text" class="md-textarea form-control"
+                <textarea id="text" required name="text" id="text" wrap="physical" class="md-textarea form-control"
                           rows="3">{{ text }}</textarea>
-                <label for="text">Текст новости</label>
             </div>
 
             <div class="">
@@ -70,9 +70,30 @@
 <script src="/static/mdb/js/popper.min.js"></script>
 <script src="/static/mdb/js/bootstrap.js"></script>
 <script src="/static/mdb/js/mdb.js"></script>
+<script src="https://cdn.ckeditor.com/4.11.4/full/ckeditor.js"></script>
 
 
+<script>
+    var ckeditor = CKEDITOR.replace( 'text', {
+        toolbarGroups : [
+		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+		{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+		{ name: 'forms', groups: [ 'forms' ] },
+		'/',
+		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+		{ name: 'links', groups: [ 'links' ] },
+		{ name: 'insert', groups: [ 'insert' ] },
+		'/',
+		{ name: 'styles', groups: [ 'styles' ] },
+		{ name: 'colors', groups: [ 'colors' ] },
+		{ name: 'tools', groups: [ 'tools' ] },
+		{ name: 'others', groups: [ 'others' ] },
+		{ name: 'about', groups: [ 'about' ] }
+    ],
+    removeButtons : 'Save,NewPage,Print,Source,Templates,PasteText,PasteFromWord,Scayt,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Blockquote,CreateDiv,BidiLtr,BidiRtl,Language,Anchor,Image,Flash,Table,Smiley,SpecialChar,PageBreak,Iframe,BGColor,TextColor,ShowBlocks,About',
+    language: 'ru'
+    });
 </script>
-
-<
-/html>
+</html>
