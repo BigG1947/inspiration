@@ -1,0 +1,269 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <h2 class="h2 text-center">Нужен ли вашему ребенку логопед?</h2>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <form method="post" class="mt-3">
+                <div id="Question1" class="my-3">
+                    <label for="">1. Пересказывает ли то, что ему читают?</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="1" id="Question1-yes" name="Question1"
+                               required>
+                        <label class="custom-control-label" for="Question1-yes">Да</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="0" id="Question1-no" name="Question1"
+                               required>
+                        <label class="custom-control-label" for="Question1-no">Нет</label>
+                    </div>
+                </div>
+                <div id="Question2" class="my-3">
+                    <label for="">2. Включает ли он радио или телевизор с большей громкостью, чем другие члены
+                        семьи?</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="1" id="Question2-yes" name="Question2"
+                               required>
+                        <label class="custom-control-label" for="Question2-yes">Да</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="0" id="Question2-no" name="Question2"
+                               required>
+                        <label class="custom-control-label" for="Question2-no">Нет</label>
+                    </div>
+                </div>
+                <div id="Question3" class="my-3">
+                    <label for="">3. Пользуется ли он предложениями, состоящими из трех-четырех слов?</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="1" id="Question3-yes" name="Question3"
+                               required>
+                        <label class="custom-control-label" for="Question3-yes">Да</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="0" id="Question3-no" name="Question3"
+                               required>
+                        <label class="custom-control-label" for="Question3-no">Нет</label>
+                    </div>
+                </div>
+                <div id="Question4" class="my-3">
+                    <label for="">4. Отвечает ли на вопросы: "кто?", "что?", "где?", "почему?"</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="1" id="Question4-yes" name="Question4"
+                               required>
+                        <label class="custom-control-label" for="Question4-yes">Да</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="0" id="Question4-no" name="Question4"
+                               required>
+                        <label class="custom-control-label" for="Question4-no">Нет</label>
+                    </div>
+                </div>
+                <div id="Question5" class="my-3">
+                    <label for="">5. Понимают ли речь ребенка посторонние?</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="1" id="Question5-yes" name="Question5"
+                               required>
+                        <label class="custom-control-label" for="Question5-yes">Да</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="0" id="Question5-no" name="Question5"
+                               required>
+                        <label class="custom-control-label" for="Question5-no">Нет</label>
+                    </div>
+                </div>
+                <div id="Question6" class="my-3">
+                    <label for="">6. Способен ли ребенок услышать мяукание кошки в соседней комнате?</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="1" id="Question6-yes" name="Question6"
+                               required>
+                        <label class="custom-control-label" for="Question6-yes">Да</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="0" id="Question6-no" name="Question6"
+                               required>
+                        <label class="custom-control-label" for="Question6-no">Нет</label>
+                    </div>
+                </div>
+                <div id="Question7" class="my-3">
+                    <label for="">7. Произносит ли он правильно большинство звуков?</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="1" id="Question7-yes" name="Question7"
+                               required>
+                        <label class="custom-control-label" for="Question7-yes">Да</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="0" id="Question7-no" name="Question7"
+                               required>
+                        <label class="custom-control-label" for="Question7-no">Нет</label>
+                    </div>
+                </div>
+                <div id="Question8" class="my-3">
+                    <label for="">8. Рассказывает ли ребенок о том, что делал в детском саду, в парке, на
+                        площадке?</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="1" id="Question8-yes" name="Question8"
+                               required>
+                        <label class="custom-control-label" for="Question8-yes">Да</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="0" id="Question8-no" name="Question8"
+                               required>
+                        <label class="custom-control-label" for="Question8-no">Нет</label>
+                    </div>
+                </div>
+                <button type="button" onclick="function f() {
+                   var main_test_alert_danger = $('#main-test-alert-danger');
+                   var main_test_alert = $('#main-test-alert');
+                   var main_answer = $('#main-test-answer');
+                   var answer1 = $('input[name=\'Question1\']:checked').val();
+                   var answer2 = $('input[name=\'Question2\']:checked').val();
+                   var answer3 = $('input[name=\'Question3\']:checked').val();
+                   var answer4 = $('input[name=\'Question4\']:checked').val();
+                   var answer5 = $('input[name=\'Question5\']:checked').val();
+                   var answer6 = $('input[name=\'Question6\']:checked').val();
+                   var answer7 = $('input[name=\'Question7\']:checked').val();
+                   var answer8 = $('input[name=\'Question8\']:checked').val();
+
+                   if (!answer1 || !answer2 || !answer3 || !answer4 || !answer5 || !answer6 || !answer7 || !answer8){
+                       console.log('Не все поля заполненны');
+                       main_test_alert.hide('fade');
+                       main_test_alert_danger.show('fade');
+                       return
+                   }
+                   main_test_alert_danger.hide('fade');
+                   var main_test_result = (+answer1 + +answer2 + +answer3 + +answer4 + +answer5 + +answer6 + +answer7 + +answer8);
+
+                   if (main_test_result <= 2) {
+                       main_answer.text('Мы рекомендуем вам пройти консультацию у логопеда.');
+                   }else{
+                       main_answer.text('У вас нету надобности в посещении логопеда.');
+                   }
+                   main_test_alert.show('fade');
+                };f();" class="btn my-btn">Узнать ответ
+                </button>
+                <div class="alert my-3 alert-danger alert-dismissible collapse"
+                     id="main-test-alert-danger" role="alert">
+                    <p id="main-test-danger">Не все поля заполненны!</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert my-3 bg-blue text-white alert-dismissible collapse" id="main-test-alert"
+                     role="alert">
+                    <b><p id="main-test-answer"></p></b>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <h3 class="text-center my-3">Тест со "слоненком"</h3>
+                <div id="Question9-elephant" class="my-3">
+                    <h5 class="text-justify">Покажите ребенку картинку слона. Пусть он вни­мательно посмотрит на нее и
+                        попробует описать, то есть
+                        рассказать, что он видит. Не надо задавать ребенку наводящие вопросы. Пусть он самостоятельно
+                        по­пробует свои силы в этом нелегком деле.</h5>
+                    <div class="row">
+                        <div class="col-4">
+                            <a data-fancybox="gallery" href="/static/img/elephant.jpg"><img src="/static/img/elephant.jpg" alt=""></a>
+                        </div>
+                    </div>
+                    <label for="">Варианты описаний:</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="0" id="Question9-0" name="Question9"
+                               required>
+                        <label class="custom-control-label" for="Question9-0">«Не знаю»</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="1" id="Question9-1" name="Question9"
+                               required>
+                        <label class="custom-control-label" for="Question9-1">«Слон. Не знаю больше»</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="2" id="Question9-2" name="Question9"
+                               required>
+                        <label class="custom-control-label" for="Question9-2">«Слон. Он маленький. Он сидит»</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="3" id="Question9-3" name="Question9"
+                               required>
+                        <label class="custom-control-label" for="Question9-3">«Это слоненок, он си­дит. У него хобот.
+                            Уши.
+                            Четыре ноги. Хвост.»</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="4" id="Question9-4" name="Question9"
+                               required>
+                        <label class="custom-control-label" for="Question9-4">«На картинке нарисо­ван слоненок. Он
+                            сидит.
+                            Свой хобот подогнул внутрь, наверно, он куша­ет»</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" value="5" id="Question9-5" name="Question9"
+                               required>
+                        <label class="custom-control-label" for="Question9-5">«На картинке нарисо­ван слоненок. Он
+                            сидит.
+                            У слоненка большие уши и длинный хобот.
+                            Свой хобот он подогнул внутрь.
+                            Бровки малыша припод­няты. Он чем-то удивлен.
+                            Это добрый и веселый сло­ненок»</label>
+                    </div>
+                </div>
+                <button type="button" onclick="function f() {
+                   var elephant_test_alert_danger = $('#elephant-test-alert-danger');
+                   var elephant_test_alert = $('#elephant-test-alert');
+                   var elephant_answer = $('#elephant-test-answer');
+                   var answer9 = $('input[name=\'Question9\']:checked').val();
+
+                   if (!answer9){
+                       console.log('Ответ не выбран');
+                       elephant_test_alert.hide('fade');
+                       elephant_test_alert_danger.show('fade');
+                       return
+                   }
+                   elephant_test_alert_danger.hide('fade');
+                   var elephan_test_result = (+answer9);
+
+                   if (elephan_test_result == 5) {
+                       elephant_answer.text('Высокий уровень.Речь развита отлично. Необходимо давать ребенку как можно больше творческих заданий.');
+                   }else if (elephan_test_result == 4){
+                       elephant_answer.text('Хороший уровень. Речь развита хорошо. Однако, следует расширять активный словарный запас.');
+                   }else if (elephan_test_result >= 2 && elephan_test_result <= 3){
+                       elephant_answer.text('Средний уровень. Речь ребенка развита удовлетворительно.');
+                   }else if (elephan_test_result <= 1){
+                       elephant_answer.text('Низкий уровень. Мы рекомендуем вам пройти консультацию у логопеда.');
+                   }
+
+                   elephant_test_alert.show('fade');
+
+
+
+                };f();" class="btn my-btn">Узнать ответ
+                </button>
+
+                <div class="alert my-3 alert-danger alert-dismissible collapse"
+                     id="elephant-test-alert-danger" role="alert">
+                    <p id="elephant-test-danger">Не выбран ответ!</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert my-3 bg-blue text-white alert-dismissible collapse" id="elephant-test-alert"
+                     role="alert">
+                    <b><p id="elephant-test-answer"></p></b>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+{% endblock %}

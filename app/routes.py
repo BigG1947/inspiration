@@ -18,8 +18,9 @@ def index():
 
 
 @app.route('/news')
-def news():
-    news = News.query.order_by(News.date.desc())
+@app.route('/news/list/<int:page>')
+def news(page=1):
+    news = News.query.order_by(News.date.desc(), News.id.desc()).paginate(per_page=10, page=page, error_out=True)
     return render_template('news.html', news_list=news)
 
 
@@ -44,9 +45,15 @@ def logoped():
     return render_template("logoped.html")
 
 
+@app.route("/logoped/test")
+def logoped_test():
+    return render_template("tests.html")
+
+
 @app.route("/gallery")
-def gallery():
-    albums = Album.query.order_by(Album.date.desc(), Album.id.desc()).all()
+@app.route("/gallery/list/<int:page>")
+def gallery(page=1):
+    albums = Album.query.order_by(Album.date.desc(), Album.id.desc()).paginate(per_page=10, page=page, error_out=True)
     return render_template("gallery.html", albums=albums)
 
 

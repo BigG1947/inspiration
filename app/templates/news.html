@@ -4,52 +4,72 @@
 {% block content %}
 
 
-<h2 class="content-title text-center">Новости</h2>
-<div class="news-block">
-    <div class="container">
-        <div class="news">
-           {% for news in news_list %}
-                <div class="row news my-3">
-                    <div class="col-12 col-lg-3 my-1 my-lg-0 news-img"><a href="/news/{{ news.id }}"><img
-                            src="{{ news.img }}"
-                            alt=""></a>
-                    </div>
-                    <div class="col-12 col-lg-8">
-                        <a href="/news/{{ news.id }}">
-                            <div class="news-title my-3 mt-lg-0 mb-lg-3">{{ news.title }}</div>
-                            <div class="news-description">
-                                {{ news.text| truncate(50) | safe }}
+    <h2 class="content-title text-center">Новости</h2>
+    <div class="news-block">
+        <div class="container">
+            <div class="news">
+                {% for news in news_list.items %}
+                    <div class="row news my-3">
+                        <div class="col-12 col-lg-3 my-1 my-lg-0 news-img"><a href="/news/{{ news.id }}"><img
+                                src="{{ news.img }}"
+                                alt=""></a>
+                        </div>
+                        <div class="col-12 col-lg-8">
+                            <a href="/news/{{ news.id }}">
+                                <div class="news-title my-3 mt-lg-0 mb-lg-3">{{ news.title }}</div>
+                                {#                            <div class="news-description">#}
+                                {#                                {{ news.text| truncate(50) | safe }}#}
+                                {#                            </div>#}
+                            </a>
+                            <div class="row justify-content-between align-items-end mt-3">
+                                <span>{{ news.author.fio }}</span>
+                                <span>{{ news.date }}</span>
                             </div>
-                        </a>
-                        <div class="row justify-content-between align-items-end mt-3">
-                            <span>{{ news.author.fio }}</span>
-                            <span>{{ news.date }}</span>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="row justify-content-center mt-3">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                {% endfor %}
+            </div>
+
+            <div class="row justify-content-center mt-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+
+                        {% if news_list.has_prev %}
+                            <li class="page-item">
+                                <a class="page-link text-blue" href="/news/list/{{ news_list.prev().page }}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Назад</span>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for page in news_list.iter_pages(left_edge=2, left_current=2, right_current=2, right_edge=2) %}
+                            {% if page %}
+                                <li class="page-item"><a class="page-link text-blue {% if page == news_list.page %} text-white bg-blue{% endif %}"
+                                                         href="/news/list/{{ page }}">{{ page }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="/news/list/{{ news_list.page }}">...</a></li>
+
+                            {% endif %}
+                        {% endfor %}
+
+
+
+                        {% if news_list.has_next %}
+                            <li class="page-item">
+                                <a class="page-link text-blue" href="/news/list/{{ news_list.next().page }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Вперед</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+
+
         </div>
     </div>
-</div>
 {% endblock %}

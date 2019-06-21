@@ -300,7 +300,7 @@ details[open] summary ~ * {
 
 
 .gallery-item {
-    height: 12rem;
+    min-height: 15rem;
 }
 
 .gallery-item-img {

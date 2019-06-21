@@ -6,7 +6,7 @@
         <h2 class="h2 text-center content-title my-3">Галерея</h2>
         <div class="container">
             <div class="row justify-content-center gallery-flow">
-                {% for album in albums %}
+                {% for album in albums.items %}
                     <a href="/album/1"
                        class="col-12 col-md-5 col-lg-3 mx-4 my-2 gallery-item d-flex justify-content-center flex-column">
                         <div class="gallery-item-img"><img src="{{ album.main_image }}" alt="" class="w-100"></div>
@@ -14,27 +14,50 @@
                     </a>
                 {% endfor %}
             </div>
+
+
+
             <div class="row justify-content-center mt-3">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
+
+                        {% if albums.has_prev %}
+                            <li class="page-item">
+                                <a class="page-link text-blue" href="/gallery/list/{{ albums.prev().page }}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Назад</span>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for page in albums.iter_pages(left_edge=2, left_current=2, right_current=2, right_edge=2) %}
+                            {% if page %}
+                                <li class="page-item"><a class="page-link text-blue {% if page == albums.page %} text-white bg-blue{% endif %}"
+                                                         href="/gallery/list/{{ page }}">{{ page }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link"
+                                                         href="/gallery/list/{{ albums.page }}">...</a></li>
+
+                            {% endif %}
+                        {% endfor %}
+
+
+
+                        {% if albums.has_next %}
+                            <li class="page-item">
+                                <a class="page-link text-blue" href="/gallery/list/{{ albums.next().page }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Вперед</span>
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
+
+
+
         </div>
     </div>
 
